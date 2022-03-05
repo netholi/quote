@@ -6,9 +6,14 @@ void main() => runApp(MaterialApp(
       home: QuoteApp(),
     ));
 
-class QuoteApp extends StatelessWidget {
+class QuoteApp extends StatefulWidget {
   QuoteApp({Key? key}) : super(key: key);
 
+  @override
+  State<QuoteApp> createState() => _QuoteAppState();
+}
+
+class _QuoteAppState extends State<QuoteApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +23,16 @@ class QuoteApp extends StatelessWidget {
           margin: EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: quotes.map((e) => QuoteCard(quote: e)).toList(),
+            children: quotes
+                .map((e) => QuoteCard(
+                      quote: e,
+                      delete: () {
+                        setState(() {
+                          quotes.remove(e);
+                        });
+                      },
+                    ))
+                .toList(),
           ),
         ),
       ),
